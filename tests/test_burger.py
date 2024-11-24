@@ -1,5 +1,4 @@
 from praktikum.burger import Burger
-from praktikum.bun import Bun
 from praktikum.ingredient import Ingredient
 from praktikum.ingredient_types import INGREDIENT_TYPE_SAUCE, INGREDIENT_TYPE_FILLING
 
@@ -32,23 +31,19 @@ class TestBurger:
 
         assert burger.ingredients[0] == ingredient2 and burger.ingredients[1] == ingredient1
 
-    def test_get_price(self):
+    def test_get_price(self, mock_bun, mock_ingredient):
         burger = Burger()
-        burger.set_buns(Bun("black bun", 100))
-        burger.add_ingredient(Ingredient(INGREDIENT_TYPE_SAUCE, "hot sauce", 50))
-        burger.add_ingredient(Ingredient(INGREDIENT_TYPE_FILLING, "cutlet", 200))
+        burger.set_buns(mock_bun)
+        burger.add_ingredient(mock_ingredient)
         price = burger.get_price()
 
-        assert price == 450
+        assert price == 500
 
-    def test_get_receipt(self):
+    def test_get_receipt(self, mock_bun, mock_ingredient):
         burger = Burger()
-        burger.set_buns(Bun("white bun", 200))
-        burger.add_ingredient(Ingredient(INGREDIENT_TYPE_SAUCE, "sour cream", 100))
-        burger.add_ingredient(Ingredient(INGREDIENT_TYPE_FILLING, "dinosaur", 300))
+        burger.set_buns(mock_bun)
+        burger.add_ingredient(mock_ingredient)
         receipt = burger.get_receipt()
 
-        assert receipt == '(==== white bun ====)\n= sauce sour cream =\n= filling dinosaur =\n(==== white bun ====)\n\nPrice: 800'
-
-
+        assert receipt == '(==== булка ====)\n= sauce hot sauce =\n(==== булка ====)\n\nPrice: 500'
 
